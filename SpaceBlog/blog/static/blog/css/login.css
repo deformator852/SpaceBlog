@@ -1,0 +1,61 @@
+/* login.css */
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.form-container {
+  padding:5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.label-style {
+  display: block;
+  font-weight: bold;
+  color: #ADD8E6; /* Цвет меток */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  background-color: black;
+  color: #ADD8E6;
+}
+
+button.button-style[type="submit"] {
+  background-color: black;
+  color: #ADD8E6;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button.button-style[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.field-error {
+  color: red; /* Цвет текста ошибки */
+  font-size: 14px; /* Размер шрифта ошибки */
+  margin-top: 5px; /* Отступ сверху от сообщения об ошибке */
+  /* Другие стили, такие как шрифт, фон, рамка и т. д., могут быть настроены по вашему желанию */
+}
+
+.form-errors {
+  margin-top: 10px; /* Отступ сверху для блока с ошибками формы */
+  /* Другие стили, такие как ширина, рамка и т. д., могут быть настроены по вашему желанию */
+}
+

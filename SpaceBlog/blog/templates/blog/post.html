@@ -1,0 +1,34 @@
+{% extends 'blog/base.html'%}
+{% load static %}
+{% block content %}
+<link rel='stylesheet' href={% static 'blog/css/post.css'%}>
+<div class="detail-post">
+	<p class="detail-post-title">{{post.title}}</p>
+	<p class="detail-post-images">
+	<img src="{{post.images.url}}">
+	</p>
+    <p class="detail-post-body">{{post.body}}</p>
+    <p class="detail-post-author">{{post.author}}</p>
+    <p class="detail-post-created">{{post.created}}</p>
+</div>
+{% if user_auth != 'AnonymousUser' %}
+<div class="post-comments">
+	<form method="post">
+		{% csrf_token %}
+		<label for="comment"></label>
+		<textarea rows="4" cols = "30" name="comment" required placeholder="comment"></textarea>
+		<button type="submit">send</button>
+	</form>
+    {% for comment in comments %}
+    <p class="author-comment">{{ comment.author_comment }}</p>
+    <p class="comment">{{ comment.comment }}</p>
+    <p class="comment-created">{{ comment.created }}</p>
+    {% endfor %}
+{% else %}
+<div class="user-not-auth">
+	    <h3>You can write a comments because you not authorization</h3>
+</div>
+{% endif%}
+</div>
+
+{% endblock %}
