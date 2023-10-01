@@ -16,6 +16,13 @@ urlpatterns = [
         name="confirm_email",
     ),
     path("verify_email/<uidb64>/<token>/", EmailVerify.as_view(), name="verify_email"),
+    path(
+        "verify_email_error/",
+        TemplateView.as_view(
+            template_name="blog/user_validation_error.html",
+        ),
+        name="user_validation_error",
+    ),
 ]
 
 if settings.DEBUG:

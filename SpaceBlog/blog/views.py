@@ -6,9 +6,13 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.http import HttpResponse
+from django.utils.http import urlsafe_base64_decode
 from django.db.models import QuerySet
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import AbstractBaseUser
+from django.core.exceptions import ValidationError
+from django.contrib.auth.tokens import default_token_generator as token_generator
+from django.contrib import messages
 from typing import Union
 from .utils import *
 from .forms import *
@@ -53,7 +57,18 @@ class BlogLogin(LoginView):
     template_name = "blog/login.html"
 
     def get_success_url(self) -> HttpResponse:
+        print("you log in!")
         return reverse_lazy("home")
+
+    def form_valid(self, form):
+        user = form.get_user()
+        check_user = User.objects.get(username=user)
+        if not check_user.email_verify == 1:
+            print("Here")
+            messages.error(self.request, "Your email not verify!")
+            return super().form_invalid(form)
+
+        return super().form_valid(form)
 
 
 class BlogRegistration(View):
@@ -68,14 +83,40 @@ class BlogRegistration(View):
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password1")
             username = form.cleaned_data.get("username")
-            user: Union[User,None] = authenticate( #pyright: ignore
-                email=email, username=username, password=password
+            user: Union[User, None] = authenticate(  # pyright: ignore
+                email=email, password=password, username=username
             )
-            send_email_for_verify(request, user) #pyright: ignore
+            send_email_for_verify(request, user)  # pyright: ignore
             return redirect("confirm_email")
 
         return render(request, "blog/registration.html", {"form": form})
 
 
 class EmailVerify(View):
-    pass
+    def get(self, request, uidb64, token):
+        user: Union[User, None] = self.get_user(uidb64)
+        if user is None and not token_generator.check_token(user, token):
+            return redirect("user_validation_error")
+        else:
+            user.email_verify = True  # pyright: ignore
+            user.save()  # pyright: ignore
+            login(request, user)
+            return redirect("home")
+
+    def post(self, request):
+        pass
+
+    @staticmethod
+    def get_user(uidb64):
+        try:
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = get_object_or_404(User, pk=uid)
+        except (
+            TypeError,
+            ValueError,
+            OverflowError,
+            User.DoesNotExist,
+            ValidationError,
+        ):
+            user = None
+        return user
