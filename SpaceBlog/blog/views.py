@@ -13,27 +13,61 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.contrib import messages
+from django.http import JsonResponse
 from typing import Union
 from .utils import *
 from .forms import *
 from .models import *
 
 
+def post_like(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+    dislike = Dislike.objects.filter(user=request.user,post=post)
+    if not created:
+        like.delete()
+    if dislike:
+        dislike.delete()
+
+    return redirect("post", post_id)
+
+
+def post_dislike(request, post_id):
+    post = Post.objects.get(pk=post_id)
+    dislike, created = Dislike.objects.get_or_create(user=request.user, post=post)
+    like = Like.objects.filter(user=request.user,post=post)
+    if not created:
+        dislike.delete()
+    if like:
+        like.delete()
+    return redirect("post", post_id)
+
+
 class BlogPost(View):
     def get(self, request, postid: int) -> HttpResponse:
         post: Post = get_object_or_404(Post, pk=postid)
-        comments: QuerySet[Comments] = Comments.objects.filter(post=post)
+        comments: QuerySet[Comment] = Comment.objects.filter(post=post).order_by(
+            "-created"
+        )
+        likes = Like.objects.filter(post=post).count()
+        dislikes = Dislike.objects.filter(post=post).count()
         return render(
             request,
             "blog/post.html",
-            {"post": post, "comments": comments, "user_auth": str(request.user)},
+            {
+                "post": post,
+                "comments": comments,
+                "user_auth": str(request.user),
+                "likes": likes,
+                "dislikes": dislikes,
+            },
         )
 
     def post(self, request, postid: int) -> HttpResponse:
         user = str(request.user)
         user_comment = request.POST.get("comment", "")
         post: Post = get_object_or_404(Post, pk=postid)
-        comment: Comments = Comments(
+        comment: Comment = Comment(
             post=post, author_comment=user, comment=user_comment, created=timezone.now()
         )
         comment.save()

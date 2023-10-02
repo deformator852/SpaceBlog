@@ -14,7 +14,7 @@ class Post(models.Model):
         return self.title
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     post = models.ForeignKey("Post", on_delete=models.CASCADE)
     author_comment = models.CharField(max_length=255)
     comment = models.CharField(max_length=1200)
@@ -26,6 +26,17 @@ class Comments(models.Model):
     def __str__(self):
         return self.author_comment
 
-
 class User(AbstractUser):
     email_verify = models.BooleanField(default=False, unique=True)
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+
+
+class Dislike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+

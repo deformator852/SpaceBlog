@@ -23,6 +23,8 @@ urlpatterns = [
         ),
         name="user_validation_error",
     ),
+    path("post_like/<int:post_id>/", post_like, name="post_like"),
+    path("post_dislike/<int:post_id>/", post_dislike, name="post_dislike"),
 ]
 
 if settings.DEBUG:

@@ -10,6 +10,10 @@
     <p class="detail-post-body">{{post.body}}</p>
     <p class="detail-post-author">{{post.author}}</p>
     <p class="detail-post-created">{{post.created}}</p>
+	<div class="grade">
+	<a style="text-decoration:none;" class="post-likes" href="{% url 'post_like' post.pk %}">👍{{likes}} </a>
+	<a style="text-decoration:none;" class="post-dislikes" href="{% url 'post_dislike' post.pk %}">👎{{dislikes}}</a>
+	</div>
 </div>
 {% if user_auth != 'AnonymousUser' %}
 <div class="post-comments">
