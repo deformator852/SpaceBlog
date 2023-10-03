@@ -13,17 +13,43 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.contrib import messages
-from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 from typing import Union
+from PIL import Image
+import uuid
 from .utils import *
 from .forms import *
 from .models import *
 
 
+class UserAccount(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        user = User.objects.get(username=request.user)
+        return render(
+            request, "blog/user_account.html", {"user": user, "title": f"user/{user}"}
+        )
+
+    @method_decorator(login_required)
+    def post(self, request):
+        upload_image = request.FILES.get("photo")
+        if upload_image:
+            image = Image.open(upload_image)
+            image.thumbnail((200, 200))
+            user_profile = User.objects.get(username=request.user)
+            if user_profile.image:
+                user_profile.image.delete()
+            unique_image_name = (
+                str(uuid.uuid4()) + upload_image.name[upload_image.name.rfind(".")]
+            )
+            user_profile.image.save(unique_image_name, upload_image)
+        return redirect("user_account")
+
+
 def post_like(request, post_id):
     post = Post.objects.get(pk=post_id)
     like, created = Like.objects.get_or_create(user=request.user, post=post)
-    dislike = Dislike.objects.filter(user=request.user,post=post)
+    dislike = Dislike.objects.filter(user=request.user, post=post)
     if not created:
         like.delete()
     if dislike:
@@ -35,7 +61,7 @@ def post_like(request, post_id):
 def post_dislike(request, post_id):
     post = Post.objects.get(pk=post_id)
     dislike, created = Dislike.objects.get_or_create(user=request.user, post=post)
-    like = Like.objects.filter(user=request.user,post=post)
+    like = Like.objects.filter(user=request.user, post=post)
     if not created:
         dislike.delete()
     if like:

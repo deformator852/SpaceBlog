@@ -1,0 +1,55 @@
+.user-account {
+  padding-top: 10px;
+}
+.about-user {
+  display: flex;
+  width: 500px;
+  flex-direction: column;
+  margin: 0px auto;
+  background-color: black;
+  border: 2.5px solid #add8e6;
+  align-items: flex-start;
+}
+
+.user-item {
+  padding-right: 20px;
+}
+
+.custom-form input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.custom-form label.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-form label.custom-file-upload:hover {
+  background-color: #0056b3;
+}
+
+.custom-form input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-form input[type="file"]::before {
+  content: "Выбрать файл";
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}

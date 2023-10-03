@@ -28,6 +28,7 @@ class Comment(models.Model):
 
 class User(AbstractUser):
     email_verify = models.BooleanField(default=False, unique=True)
+    image = models.ImageField(upload_to="user_avatar/%Y/%m/%d/",null=True,blank=True)
 
 
 class Like(models.Model):

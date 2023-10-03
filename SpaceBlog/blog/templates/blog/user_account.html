@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %} {% load static %} {% block content%}
+<link rel="stylesheet" href="{% static 'blog/css/user_account.css' %}" />
+<div class="user-account">
+  <div class="about-user">
+    <p class="user-item">name:{{user.username}}</p>
+    <p class="user-item">email:{{user.email}}</p>
+	{% if user.image %}
+	<p class="user-item"><img src="{{user.image.url}}" width=200px></img></p>
+	{% endif %}
+  <div class="load-photo">
+<form method="POST" enctype="multipart/form-data" class="custom-form">
+    {% csrf_token %}
+    <label for="file-input" class="custom-file-upload">
+        <span>Выбрать файл</span>
+    </label>
+    <input type="file" id="file-input" name="photo" accept="image/*" required />
+    <input type="submit" value="Загрузить" />
+</form>
+
+  </div>
+</div>
+
+{% endblock %}

@@ -33,13 +33,12 @@
 }
 
 .detail-post-author {
-  font-style: italic;
   margin-bottom: 10px;
   color: #add8e6;
 }
 
 .detail-post-created {
-  color: rgba(173, 216, 230, 0.8);
+  color: #add8e6;
 }
 
 .post-comments {
