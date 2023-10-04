@@ -26,18 +26,17 @@ class Comment(models.Model):
     def __str__(self):
         return self.author_comment
 
+
 class User(AbstractUser):
     email_verify = models.BooleanField(default=False, unique=True)
-    image = models.ImageField(upload_to="user_avatar/%Y/%m/%d/",null=True,blank=True)
+    image = models.ImageField(upload_to="user_avatar/%Y/%m/%d/", null=True, blank=True)
 
 
 class Like(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class Dislike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-
-

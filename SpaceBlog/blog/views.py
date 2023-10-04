@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import View, CreateView
+from django.views.generic import View
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.shortcuts import get_object_or_404
@@ -9,34 +9,33 @@ from django.http import HttpResponse
 from django.utils.http import urlsafe_base64_decode
 from django.db.models import QuerySet
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from typing import Union
 from PIL import Image
-import uuid
 from .utils import *
 from .forms import *
 from .models import *
+import uuid
 
 
 class UserAccount(View):
     @method_decorator(login_required)
-    def get(self, request):
-        user = User.objects.get(username=request.user)
+    def get(self, request) -> HttpResponse:
+        user: User = User.objects.get(username=request.user)
         return render(
             request, "blog/user_account.html", {"user": user, "title": f"user/{user}"}
         )
 
     @method_decorator(login_required)
-    def post(self, request):
+    def post(self, request) -> HttpResponse:
         upload_image = request.FILES.get("photo")
         if upload_image:
             image = Image.open(upload_image)
             image.thumbnail((200, 200))
-            user_profile = User.objects.get(username=request.user)
+            user_profile: User = User.objects.get(username=request.user)
             if user_profile.image:
                 user_profile.image.delete()
             unique_image_name = (
@@ -46,10 +45,10 @@ class UserAccount(View):
         return redirect("user_account")
 
 
-def post_like(request, post_id):
-    post = Post.objects.get(pk=post_id)
+def post_like(request, post_id: int) -> HttpResponse:
+    post: Post = Post.objects.get(pk=post_id)
     like, created = Like.objects.get_or_create(user=request.user, post=post)
-    dislike = Dislike.objects.filter(user=request.user, post=post)
+    dislike: QuerySet[Dislike] = Dislike.objects.filter(user=request.user, post=post)
     if not created:
         like.delete()
     if dislike:
@@ -58,10 +57,10 @@ def post_like(request, post_id):
     return redirect("post", post_id)
 
 
-def post_dislike(request, post_id):
-    post = Post.objects.get(pk=post_id)
+def post_dislike(request, post_id: int) -> HttpResponse:
+    post: Post = Post.objects.get(pk=post_id)
     dislike, created = Dislike.objects.get_or_create(user=request.user, post=post)
-    like = Like.objects.filter(user=request.user, post=post)
+    like: QuerySet[Like] = Like.objects.filter(user=request.user, post=post)
     if not created:
         dislike.delete()
     if like:

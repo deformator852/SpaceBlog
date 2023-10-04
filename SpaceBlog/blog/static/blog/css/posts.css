@@ -1,32 +1,25 @@
-
 .posts {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-	background-color:black;
-	border: 1px solid #ccc;
-	margin:auto;
-	margin-top:25px;
-	width:800px;
-	color:#ADD8E6;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border: 1px solid #ccc;
+  margin: auto;
+  margin-top: 25px;
+  width: 800px;
+  color: #add8e6;
 }
 
 .post {
-    text-align: center;
-    margin: 10px 0; 
+  text-align: center;
+  margin: 10px 0;
 }
 
-a {	
-	color:#ADD8E6;
+a {
+  color: #add8e6;
 }
 
 a:hover {
-	color: rgba(173, 216, 230, 0.8); 
-
+  color: rgba(173, 216, 230, 0.8);
 }
-
-
-
-

@@ -5,29 +5,23 @@
     <form method="post">
       {% csrf_token %}
       <div class="form-group">
-        <label for="{{ form.username.id_for_label }}" class="label-style"
-          >Username:</label
-        >
+        <label for="{{ form.username.id_for_label }}" class="label-style">Username:</label>
         {{ form.username }}
         <p class="field-error">{{ form.username.errors }}</p>
       </div>
 
       <div class="form-group">
-        <label for="{{ form.email.id_for_label }}" class="label-style"
-          >Email:</label
-        >
+        <label for="{{ form.email.id_for_label }}" class="label-style">Email:</label>
         {{ form.email }}
         <p class="field-error">{{ form.email.errors }}</p>
       </div>
 
       <div class="form-group">
-        <label for="{{ form.password.id_for_label }}" class="label-style"
-          >Password:</label
-        >
+        <label for="{{ form.password.id_for_label }}" class="label-style">Password:</label >
         {{ form.password }}
         <p class="field-error">{{ form.password.errors }}</p>
-      </div>
 
+      </div>
       <button type="submit" class="button-style">Login</button>
     </form>
 	{% if messages %}
