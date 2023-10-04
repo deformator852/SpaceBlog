@@ -9,7 +9,7 @@ It's a pet project about space with blog functions.
 
 4-Post feed.
 
-5-Commenets(only for user which authorised).
+5-Comments(only for user which authorised).
 
 6-Likes and Dislikes(only for user which authorised).
 
