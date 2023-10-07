@@ -15,9 +15,9 @@ from django.contrib import messages
 from django.utils.decorators import method_decorator
 from typing import Union
 from PIL import Image
-from .utils import *
 from .forms import *
 from .models import *
+from .tasks import *
 import uuid
 
 
@@ -100,11 +100,6 @@ class BlogPost(View):
         return redirect("post", postid)
 
 
-class BlogHome(View):
-    def get(self, request) -> HttpResponse:
-        return render(request, "blog/index.html")
-
-
 class BlogPosts(View):
     def get(self, request) -> HttpResponse:
         posts: QuerySet[Post] = Post.objects.all()
@@ -145,7 +140,7 @@ class BlogRegistration(View):
             user: Union[User, None] = authenticate(  # pyright: ignore
                 email=email, password=password, username=username
             )
-            send_email_for_verify(request, user)  # pyright: ignore
+            send_email_for_verify.delay(username)
             return redirect("confirm_email")
 
         return render(request, "blog/registration.html", {"form": form})

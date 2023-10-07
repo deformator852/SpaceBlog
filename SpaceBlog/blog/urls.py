@@ -5,7 +5,7 @@ from django.views.generic.base import TemplateView
 from .views import *
 
 urlpatterns = [
-    path("spaceblog/", BlogPosts.as_view(), name="home"),
+    path("", BlogPosts.as_view(), name="home"),
     path("login/", BlogLogin.as_view(), name="login"),
     path("registration/", BlogRegistration.as_view(), name="registration"),
     path("post/<int:postid>/", BlogPost.as_view(), name="post"),
