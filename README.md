@@ -1,9 +1,16 @@
-# Pet project "SpaceBlog"
-It's a pet project about space with blog functions.
+# SpaceBlog
+It's blog about space written in Python.
+
+# A technology stack that is used when developing a blog:
+Languages: HTML&CSS,Python(framework django).
+Database: MongoDB
+Distributed Task Queue: Celery
+Message broker: Redis
+
 # What's embedded here?
 1-Authorization(login + registration).
 
-2-Confirm user email after registration.
+2-Confirm user email after registration.The letter is sent to the mail using celery.
 
 3-Personal account.
 
