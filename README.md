@@ -1,7 +1,7 @@
 # SpaceBlog
 It's blog about space written in Python.
 
-# A technology stack that is used when developing a blog:
+# A technology stack that is used when developing a blog
 Languages: HTML&CSS,Python(framework django).
 
 Database: MongoDB
