@@ -3,8 +3,11 @@ It's blog about space written in Python.
 
 # A technology stack that is used when developing a blog:
 Languages: HTML&CSS,Python(framework django).
+
 Database: MongoDB
+
 Distributed Task Queue: Celery
+
 Message broker: Redis
 
 # What's embedded here?
