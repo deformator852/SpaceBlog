@@ -6,14 +6,14 @@
   background-color: black;
   border: 1px solid #ccc;
   margin: auto;
-  margin-top: 25px;
+  margin-top: 15px;
   width: 800px;
   color: #add8e6;
 }
 
 .post {
   text-align: center;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 a {

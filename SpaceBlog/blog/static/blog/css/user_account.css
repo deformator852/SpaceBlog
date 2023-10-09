@@ -1,6 +1,7 @@
 .user-account {
   padding-top: 10px;
 }
+
 .about-user {
   display: flex;
   width: 500px;
@@ -9,11 +10,10 @@
   background-color: black;
   border: 2.5px solid #add8e6;
   align-items: flex-start;
+  padding: 20px;
 }
 
 .user-item {
-  padding-right: 20px;
-  text-decoration:none;
   color: #add8e6;
 }
 
@@ -48,4 +48,12 @@
   cursor: pointer;
   margin-bottom: 15px;
   font-size: 14px;
+}
+
+.add_new_post:hover {
+  text-decoration: none;
+}
+
+.add_new_post {
+  color: #add8e6;
 }

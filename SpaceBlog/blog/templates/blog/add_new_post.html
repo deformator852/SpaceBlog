@@ -4,7 +4,7 @@
 <link rel='stylesheet' href={% static 'blog/css/add_new_post.css'%}>
 <div class="main">
 	<div class="add_post_block">
-		<form method="POST">
+		<form method="POST" enctype="multipart/form-data">
 			{% csrf_token %}
 			<label for="title">title:</label>
 			<textarea class="title" id="title" name="title" rows="1" cols="40"></textarea>

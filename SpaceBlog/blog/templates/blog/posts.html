@@ -6,15 +6,16 @@
     {% for post in posts%}
     <div class="post">
 		<p class="pst">
-		<p><a href="{% url 'post' post.pk %}">{{post.title}}</a></p>
+		  <p><a href="{% url 'post' post.id %}">{{post.title}}</a></p>
 		  {% if post.images%}
-		  <a href="{% url 'post' post.pk %}"><img src="{{post.images.url}}" width=300></a>
+		  <a href="{% url 'post' post.id %}"><img src="{{media}}{{post.images}}" width=300></a>
 		  {% endif%}
 		  <p>{{post.body | truncatewords:50}}</p>
-		  author:{{post.author}}
-		  date:{{post.created}}
-         </p>   
+		  <p>author:{{post.author}}
+		  date:{{post.created}}</p>
+		</p>
 	</div>
 {% endfor %}
 </div>
 {% endblock %}
+
