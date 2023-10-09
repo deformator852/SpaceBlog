@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.contrib import messages
 from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 from typing import Union
 from PIL import Image
 from .forms import *
@@ -20,13 +21,25 @@ from .models import *
 from .tasks import *
 import uuid
 
+class AddNewPost(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        if request.user.is_staff:
+            return render(request,"blog/add_new_post.html")
+    @method_decorator(login_required)
+    def post(self, request):
+        if request.user.is_staff:
+            pass
+
 
 class UserAccount(View):
     @method_decorator(login_required)
     def get(self, request) -> HttpResponse:
         user: User = User.objects.get(username=request.user)
         return render(
-            request, "blog/user_account.html", {"user": user, "title": f"user/{user}"}
+            request,
+            "blog/user_account.html",
+            {"user": user, "title": f"user/{user}", "request": request},
         )
 
     @method_decorator(login_required)

@@ -4,6 +4,9 @@
   <div class="about-user">
     <p class="user-item">name:{{user.username}}</p>
     <p class="user-item">email:{{user.email}}</p>
+	{% if request.user.is_staff%}
+	<a class="user-item" href="{% url 'add_new_post'%}">add new post</a>
+	{% endif %}
     {% if user.image %}
     <p class="user-item">
       <img src="{{user.image.url}}" width="200px" alt="User Image" />

@@ -13,6 +13,8 @@
 
 .user-item {
   padding-right: 20px;
+  text-decoration:none;
+  color: #add8e6;
 }
 
 .custom-form input[type="submit"] {
