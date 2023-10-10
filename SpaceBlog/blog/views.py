@@ -14,6 +14,7 @@ from django.contrib.auth.tokens import default_token_generator as token_generato
 from django.contrib import messages
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
+from django.core.paginator import Paginator
 from django.conf import settings
 from typing import Union
 from PIL import Image
@@ -22,35 +23,43 @@ from .models import *
 from .tasks import *
 import uuid
 
+
 class AddNewPost(View):
     @method_decorator(login_required)
-    def get(self, request) -> HttpResponse: #pyright:ignore
+    def get(self, request) -> HttpResponse:  # pyright:ignore
         if request.user.is_staff:
-            return render(request,"blog/add_new_post.html")
+            return render(request, "blog/add_new_post.html")
+
     @method_decorator(login_required)
-    def post(self, request) ->HttpResponse:
+    def post(self, request) -> HttpResponse:
         if request.user.is_staff:
             title = request.POST.get("title")
             content = request.POST.get("content")
             image = request.FILES.get("image")
             if image:
-                new_post = Post(title=title,body=content,author=request.user)
-                new_post.images =image
+                new_post = Post(title=title, body=content, author=request.user)
+                new_post.image = image
             else:
-                new_post = Post(title=title,body=content,author=request.user)
+                new_post = Post(title=title, body=content, author=request.user)
             new_post.save()
         return redirect("user_account")
-
 
 
 class UserAccount(View):
     @method_decorator(login_required)
     def get(self, request) -> HttpResponse:
-        user: User = User.objects.get(username=request.user)
+        user = User.objects.values("username", "email", "image", "is_staff").get(
+            username=request.user
+        )
         return render(
             request,
             "blog/user_account.html",
-            {"user": user, "title": f"user/{user}", "request": request},
+            {
+                "user": user,
+                "title": f"user/{user}",
+                "request": request,
+                "media": settings.MEDIA_URL,
+            },
         )
 
     @method_decorator(login_required)
@@ -113,7 +122,7 @@ class BlogPost(View):
         )
 
     def post(self, request, postid: int) -> HttpResponse:
-        user = str(request.user)
+        user = User.objects.get(username=request.user)
         user_comment = request.POST.get("comment", "")
         post: Post = get_object_or_404(Post, pk=postid)
         comment: Comment = Comment(
@@ -126,8 +135,15 @@ class BlogPost(View):
 
 class BlogPosts(View):
     def get(self, request) -> HttpResponse:
-        posts: QuerySet[Post] = Post.objects.values("title","body","created","author","images","id").order_by("-id")
-        return render(request, "blog/posts.html", {"posts": posts,"media":settings.MEDIA_URL})
+        posts = Post.objects.values(
+            "title", "body", "created", "author", "image", "id"
+        ).order_by("-id")
+        paginator = Paginator(posts,10)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        return render(
+            request, "blog/posts.html", {"posts": page_obj, "media": settings.MEDIA_URL}
+        )
 
 
 class BlogLogin(LoginView):
@@ -135,7 +151,6 @@ class BlogLogin(LoginView):
     template_name = "blog/login.html"
 
     def get_success_url(self) -> HttpResponse:
-        print("you log in!")
         return reverse_lazy("home")
 
     def form_valid(self, form):
@@ -180,9 +195,6 @@ class EmailVerify(View):
             user.save()  # pyright: ignore
             login(request, user)
             return redirect("home")
-
-    def post(self, request):
-        pass
 
     @staticmethod
     def get_user(uidb64):

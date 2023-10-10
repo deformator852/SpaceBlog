@@ -23,17 +23,14 @@
 		<textarea rows="4" cols = "30" name="comment" required placeholder="comment"></textarea>
 		<button type="submit">send</button>
 	</form>
-{% for comment in comments %}
-    <div class="user-info">
-        <img src="/media/{{ comment.author_comment.image }}">
-        <div class="user-text">
-            <p class="author-comment">{{ comment.author_comment }}</p>
-            <p class="comment">{{ comment.comment }}</p>
-            <p class="comment-created">{{ comment.created }}</p>
-        </div>
-    </div>
-{% endfor %}
-
+    {% for comment in comments %}
+	<div class="usr">
+		<img width=50px src="/media/{{comment.author_comment.image}}">
+        <p class="author-comment">{{ comment.author_comment }}</p>
+	</div>
+    <p class="comment">{{ comment.comment }}</p>
+    <p class="comment-created">{{ comment.created }}</p>
+    {% endfor %}
 {% else %}
 <div class="user-not-auth">
 	    <h3>You can't write a comments because you not authorization</h3>
