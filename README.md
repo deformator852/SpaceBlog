@@ -24,3 +24,5 @@ Message broker: Redis
 6-Likes and Dislikes(only for user which authorised).
 
 7-Adding post(only for admin).
+
+8-Page pagination
