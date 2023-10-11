@@ -1,0 +1,39 @@
+{% extends 'blog/base.html' %} {% block content %} {% load static %}
+<link rel="stylesheet" href="{% static 'blog/css/login.css' %}" />
+<div class="container">
+  <div class="form-container">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}" class="label-style">Username:</label>
+        {{ form.username }}
+        <p class="field-error">{{ form.username.errors }}</p>
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.email.id_for_label }}" class="label-style">Email:</label>
+        {{ form.email }}
+        <p class="field-error">{{ form.email.errors }}</p>
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.password.id_for_label }}" class="label-style">Password:</label >
+        {{ form.password }}
+        <p class="field-error">{{ form.password.errors }}</p>
+
+      </div>
+      <button type="submit" class="button-style">Login</button>
+    </form>
+	{% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+        {{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+  </div>
+</div>
+{% endblock %}
