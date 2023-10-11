@@ -1,0 +1,37 @@
+.main {
+  width: 300px;
+  margin: 0px auto;
+}
+
+.content,
+.title,
+input[type="file"] {
+  background-color: black;
+  color: #add8e6;
+  resize: none;
+  border: 2px solid #add8e6;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+input[type="file"]::file-selector-button {
+  display: none;
+}
+
+input[type="file"] {
+  width: 111%;
+}
+
+button[type="submit"] {
+  width: 100px;
+  height:30px;
+  color: #add8e6;
+  background-color: black;
+}
+
+form label,
+form input,
+form textarea,
+form button {
+  margin-bottom: 10px;
+}

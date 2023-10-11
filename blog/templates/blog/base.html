@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+</head>
+<body style="background-image: url('{% static 'blog/images/123.png' %}');">
+    <header class="nav">
+		<a class="nav-item" href="{% url 'home' %}">Posts</a>
+		<a class="nav-item" href="{% url 'login'%}">Login</a>
+		<a class="nav-item" href="{% url 'registration'%}">Registration</a>
+		<a class="nav-item" href="{% url 'user_account' %}">Account</a>
+    </header>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
+
+
