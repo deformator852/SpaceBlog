@@ -1,10 +1,11 @@
-{% extends 'blog/base.html' %} {% load static %} {% block content%}
+{% extends 'blog/base.html' %} {% load static %}
+{% block content%}
 <link rel="stylesheet" href="{% static 'blog/css/user_account.css' %}" />
 <div class="user-account">
   <div class="about-user">
     <p class="user-item">NICKNAME:{{user.username}}</p>
     <p class="user-item">EMAIL:{{user.email}}</p>
-	{% if request.user.is_staff%}
+	{% if request.user.is_staff %}
 	<p class="user-item"><a class="add_new_post" href="{% url 'add_new_post'%}">NEW POST</a></p>
 	{% endif %}
     {% if user.image %}

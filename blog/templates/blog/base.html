@@ -11,7 +11,9 @@
 		<a class="nav-item" href="{% url 'home' %}">Posts</a>
 		<a class="nav-item" href="{% url 'login'%}">Login</a>
 		<a class="nav-item" href="{% url 'registration'%}">Registration</a>
-		<a class="nav-item" href="{% url 'user_account' %}">Account</a>
+		{% if user.is_authenticated %}
+		  <a class="nav-item" href="{% url 'user_account' %}">Account</a>
+		{% endif %}
     </header>
     {% block content %}
     {% endblock %}

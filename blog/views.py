@@ -115,7 +115,6 @@ class BlogPost(View):
             {
                 "post": post,
                 "comments": comments,
-                "user_auth": str(request.user),
                 "likes": likes,
                 "dislikes": dislikes,
             },
@@ -141,8 +140,9 @@ class BlogPosts(View):
         paginator = Paginator(posts,10)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
+        print(request.user)
         return render(
-            request, "blog/posts.html", {"posts": page_obj, "media": settings.MEDIA_URL}
+                request, "blog/posts.html", {"posts": page_obj, "media": settings.MEDIA_URL,"user_auth":str(request.user)}
         )
 
 
