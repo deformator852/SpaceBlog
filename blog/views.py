@@ -13,8 +13,8 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.contrib import messages
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
+from django.core.cache import cache
 from django.conf import settings
 from typing import Union
 from PIL import Image
@@ -37,7 +37,7 @@ class AddNewPost(View):
             content = request.POST.get("content")
             image = request.FILES.get("image")
             if image:
-                new_post = Post(title=title, body=content, author=request.user)
+                new_post = Post(title=title, body=content, author=request.user,image=image)
                 new_post.image = image
             else:
                 new_post = Post(title=title, body=content, author=request.user)

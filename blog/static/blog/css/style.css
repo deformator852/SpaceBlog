@@ -1,19 +1,26 @@
 body {
-  background-color: black;
-  color: #add8e6;
   font-family: "Courier New", Courier, monospace;
   font-size: 20px;
   font-weight:bold;
+  margin:0;
+  background-color: black;
+  color: #add8e6;
 }
 
 .nav-item {
   text-decoration: none;
   margin-left: 25px;
+  /* color: #FFFFFF; */
   color: #add8e6;
 }
 
 .nav {
   text-align: center;
+  margin:0;
+  height:50px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
 }
 .email-confirm-main {

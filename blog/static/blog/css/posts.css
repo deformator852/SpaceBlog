@@ -4,7 +4,6 @@
   align-items: center;
   justify-content: center;
   background-color: black;
-  border: 1px solid #ccc;
   margin: auto;
   margin-top: 15px;
   width: 800px;
@@ -14,6 +13,8 @@
 .post {
   text-align: center;
   margin: 5px 0;
+  border: 2px solid #add8e6;
+  border-radius: 100px;
 }
 
 a {

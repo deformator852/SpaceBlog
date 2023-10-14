@@ -6,13 +6,13 @@
 	<div class="add_post_block">
 		<form method="POST" enctype="multipart/form-data">
 			{% csrf_token %}
-			<label for="title">title:</label>
-			<textarea class="title" id="title" name="title" rows="1" cols="40"></textarea>
-			<label for="image">image(optional):</label>
-			<input type="file" id="image" name="image"></label><br>
-			<label for="content">body:</label>
-			<textarea class="content" id="content" name="content" rows="30" cols="40"></textarea>			
-			<button type="submit">send</button>
+            <label for="title">title:</label>
+            <textarea class="title" id="title" name="title" rows="1" cols="40"></textarea>
+            <label for="image">image(optional):</label>
+            <input type="file" id="image" name="image"><br>
+            <label for="content">body:</label>
+            <textarea class="content" id="content" name="content" rows="30" cols="40"></textarea>
+            <button type="submit">send</button>
 		</form>
 	</div>
 </div>
